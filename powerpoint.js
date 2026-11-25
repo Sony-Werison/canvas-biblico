@@ -4,11 +4,20 @@ import {layoutReverses,connectionLine} from './geometry.js';
 
 // Reservar margem para o texto, os versos e as anotações de cada faixa.
 export const PAGE_HEIGHT = 675;
-export function splitIntoPages(items){
+export function splitIntoPages(items,divisions=[]){
  const pages=new Map();
  for(const item of items.filter(i=>i.kind==='word')){const index=Math.max(0,Math.floor(item.y/PAGE_HEIGHT));if(!pages.has(index))pages.set(index,[]);pages.get(index).push(item);}
- for(const item of items.filter(i=>i.kind!=='word')){const anchor=item.anchorId&&items.find(i=>i.id===item.anchorId);const index=Math.max(0,Math.floor((anchor?.y??item.y)/PAGE_HEIGHT));if(!pages.has(index))pages.set(index,[]);pages.get(index).push(item);}
- return [...pages.entries()].sort((a,b)=>a[0]-b[0]).map(([index,content])=>({offset:index*PAGE_HEIGHT,items:content}));
+ const output=[],breaks=new Set(divisions);
+ for(const [index,words] of [...pages.entries()].sort((a,b)=>a[0]-b[0])){
+  words.sort((a,b)=>Math.abs(a.y-b.y)<1?a.x-b.x:a.y-b.y);let group=[];
+  const flush=()=>{if(group.length){output.push({offset:output.length&&breaks.has(group[0].id)?Math.max(index*PAGE_HEIGHT,group[0].y-45):index*PAGE_HEIGHT,items:group});group=[];}};
+  for(const word of words){if(breaks.has(word.id))flush();group.push(word);}flush();
+ }
+ for(const item of items.filter(i=>i.kind!=='word')){
+  const target=output.find(p=>item.anchorId&&p.items.some(w=>w.id===item.anchorId))||output.find(p=>Math.floor(item.y/PAGE_HEIGHT)===Math.floor(p.items[0].y/PAGE_HEIGHT));
+  if(target)target.items.push(item);else output.push({offset:Math.max(0,Math.floor(item.y/PAGE_HEIGHT))*PAGE_HEIGHT,items:[item]});
+ }
+ return output;
 }
 
 export function buildReverseLayouts(items,elements,widthOf){

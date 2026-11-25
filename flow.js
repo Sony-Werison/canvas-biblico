@@ -11,7 +11,7 @@ export function fitRowsToSlides(items, updateOriginal=false){
  }
 }
 export function reflowAfterDrag(items, before, movedIds, options, widthOf) {
-  const gap = 10, lineGap = 16;
+  const gap = 10;
   const moved = new Set(movedIds);
   const blockIds = new Set(items.filter(w => w.kind === 'word' && moved.has(w.id)).map(w => w.blockId));
   for (const blockId of blockIds) {
@@ -38,8 +38,8 @@ export function reflowAfterDrag(items, before, movedIds, options, widthOf) {
       const word=words[i],old=before.get(word.id),oldPrev=before.get(words[i-1].id);
       const previousBreak=old&&oldPrev&&old.y-oldPrev.y>18;
       const manual=word.breakKind==='manual'||word.breakBefore>0||(previousBreak&&word.breakKind!=='auto');
-      if(manual){y+=previousBreak?old.y-oldPrev.y:Math.ceil((35+lineGap)/options.lineStep)*options.lineStep*Math.max(1,word.breakBefore||1);x=previousBreak?old.x:originX;word.breakBefore=Math.max(1,word.breakBefore||1);word.breakKind='manual';}
-      else if(x+widthOf(word)>originX+(word.flowWidth||1000)+0.1){y+=Math.ceil((35+lineGap)/options.lineStep)*options.lineStep;x=originX;word.breakBefore=0;word.breakKind='auto';}
+      if(manual){y+=previousBreak?old.y-oldPrev.y:options.lineStep*Math.max(1,word.breakBefore||1);x=previousBreak?old.x:originX;word.breakBefore=Math.max(1,word.breakBefore||1);word.breakKind='manual';}
+      else if(x+widthOf(word)>originX+(word.flowWidth||1000)+0.1){y+=options.lineStep;x=originX;word.breakBefore=0;word.breakKind='auto';}
       else {word.breakBefore=0;word.breakKind='none';}
       word.x=x;word.y=y;x+=widthOf(word)+gap;
     }
