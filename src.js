@@ -30,7 +30,7 @@ function renderLines(scene){
 }
 function render(){
  board.replaceChildren();
- const scene=original?items:layoutReverses(items,widthOf);boardHeight=Math.ceil(Math.max(675,...scene.map(i=>(original?i.oy:i.y)+(i.kind==='note'?300:40)))/675)*675;board.style.height=boardHeight+'px';board.style.marginBottom=`${-boardHeight*(1-scale)}px`;for(let n=0;n<boardHeight/675;n++){const frame=document.createElement('div');frame.className='slide-frame';frame.style.top=`${n*675}px`;frame.setAttribute('aria-hidden','true');const label=document.createElement('span');label.textContent=`Slide ${n+1} · 16:9`;frame.append(label);board.append(frame);}renderLines(scene);
+ const scene=original?items:layoutReverses(items,widthOf);boardHeight=Math.ceil(Math.max(675,...scene.map(i=>(original?i.oy:i.y)+(i.kind==='note'?300:40)))/675)*675;board.style.height=boardHeight+'px';board.style.marginBottom=`${-boardHeight*(1-scale)}px`;for(let n=0;n<boardHeight/675;n++){const frame=document.createElement('div');frame.className='slide-frame';frame.style.top=`${n*675}px`;frame.setAttribute('aria-hidden','true');const label=document.createElement('span');label.textContent=`Slide ${n+1} · 16:9`;frame.append(label);board.append(frame);}if(!scene.length){const empty=document.createElement('div');empty.className='empty-state';empty.innerHTML='<span class="empty-icon" aria-hidden="true">▤</span><strong>Um espaço para suas ideias</strong><span>Cole um trecho na aba Texto para começar a organizar seu estudo.</span>';board.append(empty);}renderLines(scene);
  for(const item of scene){
   if(original && item.kind !== 'word') continue;
   const el=document.createElement('div'); el.className=`item ${item.kind==='note'?'note':''} ${selected.has(item.id)&&!original?'selected':''} ${divisions.has(item.id)&&!original?'division-start':''}`;
@@ -46,7 +46,7 @@ function render(){
  $('split-count').textContent=divisions.size?`${divisions.size} ${divisions.size===1?'divisão manual':'divisões manuais'}.`:'Nenhuma divisão manual.';
 }
 function changed(message='Alterações salvas neste navegador'){persist();render();report(message);}
-function fit(){const available=Math.max(250,$('viewport').clientWidth-48);scale=Math.min(1,available/1200);board.style.transform=`scale(${scale})`;board.style.marginBottom=`${-boardHeight*(1-scale)}px`;}
+function fit(){const viewport=$('viewport'),style=getComputedStyle(viewport),available=Math.max(100,viewport.clientWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight));scale=Math.min(1,available/1200);board.style.transform=`scale(${scale})`;board.style.marginRight=`${-1200*(1-scale)}px`;board.style.marginBottom=`${-boardHeight*(1-scale)}px`;}
 function startDrag(e,item){
  if(original)return; e.preventDefault(); e.stopPropagation();
  board.focus({preventScroll:true});
