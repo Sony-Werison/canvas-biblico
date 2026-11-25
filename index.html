@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Canvas Bíblico</title><link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header><div><strong>Canvas Bíblico</strong><span>Organize, estude e apresente seus textos</span></div><div class="files"><button id="new">Novo</button><button id="open">Abrir projeto</button><button id="save">Salvar projeto</button><button class="primary" id="ppt">Exportar PowerPoint</button><input id="file" type="file" accept=".json,.canvasbiblico,application/json" hidden></div></header>
+  <main><aside>
+    <section><h2>Texto</h2><p>Cole um trecho para adicionar palavras ao quadro.</p><textarea id="input" placeholder="Cole seu texto aqui..."></textarea><button id="add" class="wide">Adicionar texto</button></section>
+    <section><h2>Seleção</h2><p>Clique em uma palavra; use Shift para selecionar várias. Arraste para reorganizar.</p><div class="grid"><label>Cor do texto<input id="color" type="color" value="#202b38"></label><label>Realce<input id="highlight" type="color" value="#ffe793"></label></div><div class="row"><button id="apply-color">Aplicar cor</button><button id="apply-highlight">Realçar</button></div><div class="row"><button id="bold">Negrito</button><button id="unhighlight">Remover realce</button></div><button id="delete" class="wide">Excluir seleção</button></section>
+    <section><h2>Notas</h2><textarea id="note-text" placeholder="Escreva uma anotação..."></textarea><button id="note" class="wide">Adicionar anotação</button></section>
+    <section><h2>Visualização</h2><div class="row"><button id="original" aria-pressed="false">Texto original</button><button id="fit">Enquadrar</button></div><p>O original mostra as palavras nas posições em que foram adicionadas.</p></section>
+  </aside><div class="workspace"><div class="bar"><span id="status" role="status">Pronto para começar</span><span>Quadro 16:9 · arraste para organizar</span></div><div id="viewport"><div id="board" aria-label="Quadro de edição"></div></div></div></main>
+  <script type="module" src="./app.bundle.js"></script>
+</body></html>

@@ -1,0 +1,20 @@
+{
+  "name": "canvas-biblico-web",
+  "version": "1.0.0",
+  "description": "Editor independente do Canvas Bíblico",
+  "scripts": {
+    "build": "esbuild src.js --bundle --minify --format=esm --outfile=app.bundle.js",
+    "test": "node test.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "commonjs",
+  "dependencies": {
+    "pptxgenjs": "^4.0.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.2",
+    "playwright": "^1.56.1"
+  },
+  "private": true
+}
