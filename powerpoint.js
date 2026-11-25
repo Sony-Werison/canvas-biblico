@@ -3,12 +3,12 @@ import {fadeAnimation} from './fade-animation.ts';
 import {layoutReverses,connectionLine} from './geometry.js';
 
 // Reservar margem para o texto, os versos e as anotações de cada faixa.
-export const PAGE_HEIGHT = 560;
+export const PAGE_HEIGHT = 675;
 export function splitIntoPages(items){
  const pages=new Map();
  for(const item of items.filter(i=>i.kind==='word')){const index=Math.max(0,Math.floor(item.y/PAGE_HEIGHT));if(!pages.has(index))pages.set(index,[]);pages.get(index).push(item);}
  for(const item of items.filter(i=>i.kind!=='word')){const anchor=item.anchorId&&items.find(i=>i.id===item.anchorId);const index=Math.max(0,Math.floor((anchor?.y??item.y)/PAGE_HEIGHT));if(!pages.has(index))pages.set(index,[]);pages.get(index).push(item);}
- return [...pages.entries()].sort((a,b)=>a[0]-b[0]).map(([index,content])=>({offset:index*PAGE_HEIGHT-35,items:content}));
+ return [...pages.entries()].sort((a,b)=>a[0]-b[0]).map(([index,content])=>({offset:index*PAGE_HEIGHT,items:content}));
 }
 
 export function buildReverseLayouts(items,elements,widthOf){

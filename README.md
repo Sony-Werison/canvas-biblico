@@ -2,6 +2,8 @@
 
 Editor independente que funciona no navegador, sem Obsidian, Excalidraw ou servidor de aplicação. Cole um texto, organize as palavras por arrasto, selecione várias com Shift e aplique cores e realces. Adicione notas e alterne entre as posições originais e as organizadas.
 
+A barra lateral organiza as ferramentas nas abas Texto, Realces, Setas, Anotações, Verso e Layout. O quadro mostra os limites de cada slide 16:9; linhas de texto adicionadas ou reorganizadas são ajustadas para não atravessar esses limites.
+
 **Salvar projeto** baixa um arquivo `.json`; use **Abrir projeto** para continuar editando em outro momento ou dispositivo. Arquivos `.canvasbiblico` criados anteriormente também podem ser abertos. O navegador guarda automaticamente uma cópia local, que pode ser apagada ao limpar os dados do navegador. Mantenha um arquivo salvo como cópia de segurança.
 
 **Exportar PowerPoint** divide o texto longo em trechos, criando para cada trecho um slide com as posições originais e outro com o quadro organizado. Esta versão ainda não implementa todos os recursos do plugin original e não importa arquivos de desenhos do Excalidraw.

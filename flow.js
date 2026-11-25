@@ -1,4 +1,15 @@
 // Reorganização por passagem, adaptada do motor do Canvas Bíblico original.
+export function fitRowsToSlides(items, updateOriginal=false){
+ for(const block of new Set(items.filter(i=>i.kind==='word'&&i.blockId).map(i=>i.blockId))){
+  const words=items.filter(i=>i.kind==='word'&&i.blockId===block).sort((a,b)=>a.order-b.order);
+  let shift=0,lastY=null,rowShift=0;
+  for(const word of words){
+   const naturalY=word.y;
+   if(lastY===null||Math.abs(naturalY-lastY)>1){let y=naturalY+shift;const page=Math.floor(Math.max(0,y)/675);if(y-page*675>635){shift=(page+1)*675+35-naturalY;y=naturalY+shift;}rowShift=shift;lastY=naturalY;}
+   word.y=naturalY+rowShift;if(updateOriginal)word.oy=word.y;
+  }
+ }
+}
 export function reflowAfterDrag(items, before, movedIds, options, widthOf) {
   const gap = 10, lineGap = 16;
   const moved = new Set(movedIds);
